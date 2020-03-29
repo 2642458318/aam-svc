@@ -1,14 +1,24 @@
-package fx.controller.config;
+package fx.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fx.model.entity.hr.Hr;
+import fx.model.param.resp.RespBean;
+import fx.service.local.hr.impl.HrSeriviceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.*;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -17,17 +27,28 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
-/**
- * spring security 配置文件
- */
-@Configuration(value = "spring security 配置文件")
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    HrSeriviceImpl hrService;
+
+    @Autowired
+    CustomFilterInvocationSecurityMetadataSource myFilterConfig;
+
+    @Autowired
+    CustomUrlDecisionManager myDecisionManager;
 
     @Bean
     PasswordEncoder passwordEncoder() {
         //SHA-256 +随机盐+密钥对密码进行加密
         return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(hrService);//不能是接口
     }
 
     /**
@@ -45,14 +66,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 //所有请求认证之后才可以访问
                 .anyRequest().authenticated()
-                /*.withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O object) {
                         object.setAccessDecisionManager(myDecisionManager);
                         object.setSecurityMetadataSource(myFilterConfig);
                         return object;
                     }
-                })*/
+                })
                 .and()
                 //表单登录
                 .formLogin()
@@ -60,14 +81,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 //设置登录处理的url
-                .loginProcessingUrl("doLogin")
+                .loginProcessingUrl("/doLogin")
                 //设置登录界面，实际上没有登录界面，返回一个json
-                .loginPage("/login.html")
+                .loginPage("/login")
                 //登陆成功处理
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication authentication) throws IOException, ServletException {
-                        /*//设置返回json
+                        //设置返回json
                         resp.setContentType("application/json;charset=utf-8");
                         PrintWriter out = resp.getWriter();
                         //登录成功后返回的对象
@@ -78,14 +99,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         //将传入的对象序列化为json，返回给调用者
                         String s = new ObjectMapper().writeValueAsString(ok);
                         out.write(s);
-                        out.close();*/
+                        out.close();
                     }
                 })
                 //登录失败处理
                 .failureHandler(new AuthenticationFailureHandler() {
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest req, HttpServletResponse resp, AuthenticationException exception) throws IOException, ServletException {
-                        /*//设置返回json
+                        //设置返回json
                         resp.setContentType("application/json;charset=utf-8");
                         PrintWriter out = resp.getWriter();
                         //登录失败后返回的对象
@@ -103,7 +124,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         }
                         //将传入的对象序列化为json，返回给调用者
                         out.write(new ObjectMapper().writeValueAsString(error));
-                        out.close();*/
+                        out.close();
                     }
                 })
                 //跟登录相关的接口直接返回
@@ -114,12 +135,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessHandler(new LogoutSuccessHandler() {
                     @Override
                     public void onLogoutSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication authentication) throws IOException, ServletException {
-                        /*//设置返回json
+                        //设置返回json
                         resp.setContentType("application/json;charset=utf-8");
                         PrintWriter out = resp.getWriter();
                         //将传入的对象序列化为json，返回给调用者
                         out.write(new ObjectMapper().writeValueAsString(RespBean.ok("注销成功")));
-                        out.close();*/
+                        out.close();
                     }
                 })
                 .permitAll()

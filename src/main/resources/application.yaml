@@ -8,9 +8,9 @@ github:
               url: "http://localhost:9527/callback"
 spring:
        datasource:
-         #type: com.alibaba.druid.pool.DruidDataSource
-         #driver-class-name: com.mysql.jdbc.Driver
-         url: "jdbc:mysql:///vue?characterEncoding=UTF-8"
+         type: com.alibaba.druid.pool.DruidDataSource
+         driver-class-name: com.mysql.jdbc.Driver
+         url: "jdbc:mysql:///aam?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
          username: root
          password: root
        rabbitmq:
@@ -23,7 +23,7 @@ spring:
          #开启 returnedMessage回调
          publisher-returns: true
 mybatis:
-  mapper-locations: classpath:com/www/community/dao/mapping/*.xml
+  mapper-locations: classpath*:fx/dao/mapping/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
