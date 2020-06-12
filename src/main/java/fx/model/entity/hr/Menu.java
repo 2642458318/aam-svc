@@ -1,29 +1,37 @@
 package fx.model.entity.hr;
 
+import fx.model.param.Menu.Meta;
+
 import java.util.List;
 
 public class Menu {
     private Integer id;
 
     private String url;
-
+    /**
+     * 请求路径
+     */
     private String path;
 
+    /**
+     * 组件的名字
+     */
     private String component;
 
     private String name;
+    /**
+     * 组件的图标
+     */
+    private String iconCls;
 
-    private String iconcls;
+    private Meta meta;
+    public Meta getMeta() {
+        return meta;
+    }
 
-    private Boolean keepalive;
-
-    private Boolean requireauth;
-
-    private Integer parentid;
-
-    private Boolean enabled;
-    private List<Menu> children;
-    private List<Role> roles;
+    public void setMeta(Meta meta) {
+        this.meta = meta;
+    }
 
     public List<Menu> getChildren() {
         return children;
@@ -31,6 +39,34 @@ public class Menu {
 
     public void setChildren(List<Menu> children) {
         this.children = children;
+    }
+
+    /**
+     * 副菜单
+     */
+    private Integer parentid;
+
+    /**
+     * 表示这个菜单项是否启用
+     */
+    private Boolean enabled;
+
+    private List<Menu> children;
+    /**
+     * 用户角色
+     */
+    private List<Role> roles;
+    /**
+     * 进入这个组件要不要先登录
+     */
+    private Boolean requireauth;
+
+    public Boolean getRequireauth() {
+        return requireauth;
+    }
+
+    public void setRequireauth(Boolean requireauth) {
+        this.requireauth = requireauth;
     }
 
     public List<Role> getRoles() {
@@ -81,28 +117,12 @@ public class Menu {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getIconcls() {
-        return iconcls;
+    public String getIconCls() {
+        return iconCls;
     }
 
-    public void setIconcls(String iconcls) {
-        this.iconcls = iconcls == null ? null : iconcls.trim();
-    }
-
-    public Boolean getKeepalive() {
-        return keepalive;
-    }
-
-    public void setKeepalive(Boolean keepalive) {
-        this.keepalive = keepalive;
-    }
-
-    public Boolean getRequireauth() {
-        return requireauth;
-    }
-
-    public void setRequireauth(Boolean requireauth) {
-        this.requireauth = requireauth;
+    public void setIconCls(String iconCls) {
+        this.iconCls = iconCls == null ? null : iconCls.trim();
     }
 
     public Integer getParentid() {

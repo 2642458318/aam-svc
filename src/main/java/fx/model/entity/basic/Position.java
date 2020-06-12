@@ -1,12 +1,19 @@
-package fx.model.entity.hr;
+package fx.model.entity.basic;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
+/**
+ * 职位表
+ */
 public class Position {
     private Integer id;
 
     private String name;
 
+    //确定日期格式
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createDate;
 
     private Boolean enabled;

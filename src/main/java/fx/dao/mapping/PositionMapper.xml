@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="fx.dao.mapper.system.basic.PositionMapper">
-    <resultMap id="BaseResultMap" type="fx.model.entity.hr.Position">
+<mapper namespace="fx.dao.mapper.basic.PositionMapper">
+    <resultMap id="BaseResultMap" type="fx.model.entity.basic.Position">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
@@ -16,4 +16,27 @@
             enabled
         from position
     </select>
+
+    <insert id="insertSelective" parameterType="fx.model.entity.basic.Position">
+        INSERT INTO POSITION (id, name, createDate, enabled) VALUE (#{id}, #{name}, #{createDate}, #{enabled})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="fx.model.entity.basic.Position">
+        update position
+        set name       = #{name,jdbcType=VARCHAR},
+            createDate = #{createDate,jdbcType=TIMESTAMP},
+            enabled    = #{enabled,jdbcType=BIT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="fx.model.entity.basic.Position">
+        delete from position
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deletePositionByIds">
+        delete from position where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

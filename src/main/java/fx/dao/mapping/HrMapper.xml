@@ -29,16 +29,20 @@
         from hr
         where username = #{username}
     </select>
-    <!--根据id查询角色-->
-    <select id="getHrRolesById" resultType="fx.model.entity.hr.Role">
-        SELECT
+    <!--根据id查询角色
+    SELECT
             r.`id`,
             r.`name`,
             r.`nameZh`
         FROM role r
             LEFT JOIN hr_role hrr
                 ON r.`id` = hrr.rid
-        WHERE hrr.hrid = #{id}
+        WHERE hrr.hrid = #{id}-->
+    <select id="getHrRolesById" resultType="fx.model.entity.hr.Role">
+
+        SELECT r.*
+        FROM role r, hr_role hrr
+        WHERE hrr.rid = r.id AND hrr.hrid = #{id}
     </select>
 </mapper>
     

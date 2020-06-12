@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface HrMapper {
-    int deleteByPrimaryKey(Integer id);
+    /*int deleteByPrimaryKey(Integer id);
 
     int insert(Hr record);
 
@@ -19,7 +19,7 @@ public interface HrMapper {
 
     int updateByPrimaryKeySelective(Hr record);
 
-    int updateByPrimaryKey(Hr record);
+    int updateByPrimaryKey(Hr record);*/
 
     /**
      * 根据用户名查询用户信息

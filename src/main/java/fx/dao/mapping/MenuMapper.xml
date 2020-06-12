@@ -7,18 +7,63 @@
         <result column="path" property="path" jdbcType="VARCHAR"/>
         <result column="component" property="component" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="iconCls" property="iconcls" jdbcType="VARCHAR"/>
+        <result column="iconCls" property="iconCls" jdbcType="VARCHAR"/>
         <result column="keepAlive" property="keepalive" jdbcType="BIT"/>
         <result column="requireAuth" property="requireauth" jdbcType="BIT"/>
         <result column="parentId" property="parentid" jdbcType="INTEGER"/>
         <result column="enabled" property="enabled" jdbcType="BIT"/>
+        <association property="meta" javaType="fx.model.param.Menu.Meta">
+            <result column="keepalive" property="keepalive" jdbcType="BIT"/>
+            <result column="requireauth" property="requireauth" jdbcType="BIT"/>
+        </association>
     </resultMap>
+
+    <resultMap id="Menus2" type="fx.model.entity.hr.Menu" extends="BaseResultMap">
+        <collection property="children" ofType="fx.model.entity.hr.Menu">
+            <id column="id2" property="id" jdbcType="INTEGER"/>
+            <result column="url2" property="url" jdbcType="VARCHAR"/>
+            <result column="path2" property="path" jdbcType="VARCHAR"/>
+            <result column="component2" property="component" jdbcType="VARCHAR"/>
+            <result column="name2" property="name" jdbcType="VARCHAR"/>
+            <result column="iconCls2" property="iconCls" jdbcType="VARCHAR"/>
+            <result column="keepAlive2" property="keepalive" jdbcType="BIT"/>
+            <result column="requireAuth2" property="requireauth" jdbcType="BIT"/>
+            <result column="parentId2" property="parentid" jdbcType="INTEGER"/>
+            <result column="enabled2" property="enabled" jdbcType="BIT"/>
+            <association property="meta" javaType="fx.model.param.Menu.Meta">
+                <result column="keepalive2" property="keepalive" jdbcType="BIT"/>
+                <result column="requireauth2" property="requireauth" jdbcType="BIT"/>
+            </association>
+        </collection>
+    </resultMap>
+    <!--根据用户id查询菜单列表
+    根据用户id先去hr_role表里查rid
+    再去menu_role表里面查mid
+    再拿着mid去menu里面查id
+    -->
+    <select id="getMenusByHrId" resultMap="Menus2">
+        select distinct
+            m1.*,
+            m2.id          AS id2,
+            m2.component   as component2,
+            m2.enabled     AS enabled2,
+            m2.iconCls     AS iconCls2,
+            m2.keepAlive   AS keepAlive2,
+            m2.`name`      AS name2,
+            m2.parentId    AS parentId2,
+            m2.requireAuth AS requireAuth2,
+            m2.path        AS path2
+        from menu m1, menu m2, hr_role hrr, menu_role mr
+        WHERE m1.id = m2.parentId and hrr.hrid = #{hrid} AND hrr.rid = mr.rid AND mr.mid = m2.id AND m2.enabled = 1
+        ORDER BY m1.id, m2.id
+    </select>
+
 
     <resultMap id="MenuWithRole" type="fx.model.entity.hr.Menu" extends="BaseResultMap">
         <collection property="roles" ofType="fx.model.entity.hr.Role">
             <id column="rid" property="id"/>
             <result column="rname" property="name"/>
-            <result column="rnameZh" property="nameZh"/>
+            <result column="rnameZh" property="rnameZh"/>
         </collection>
     </resultMap>
     <select id="getAllMenuWitchRole" resultMap="MenuWithRole">

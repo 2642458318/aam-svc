@@ -10,7 +10,7 @@ spring:
        datasource:
          type: com.alibaba.druid.pool.DruidDataSource
          driver-class-name: com.mysql.jdbc.Driver
-         url: "jdbc:mysql:///aam?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+         url: "jdbc:mysql:///aam?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8"
          username: root
          password: root
        rabbitmq:

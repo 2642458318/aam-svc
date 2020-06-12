@@ -49,7 +49,8 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
                 return SecurityConfig.createList(str);
             }
         }
-        return SecurityConfig.createList("ROLB_LOGIN");
+        //凡是没匹配上的统一，登录之后就能访问  ROLB_LOGIN只是一个标记
+        return SecurityConfig.createList("ROLE_LOGIN");
     }
 
     @Override

@@ -164,7 +164,7 @@ public class Hr implements UserDetails {
 
 
     /**
-     * 集合里面返回角色
+     * 返回用户角色的方法
      * 作用：用来获取当前用户所具有的角色
      *
      * @return
