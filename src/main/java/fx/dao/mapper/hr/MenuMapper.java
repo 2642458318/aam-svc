@@ -25,4 +25,6 @@ public interface MenuMapper {
     List<Menu> getAllMenuWitchRole();
 
     List<Menu> getMenusByHrId(Integer Hrid);
+
+    List<Menu> getAllMenu();
 }

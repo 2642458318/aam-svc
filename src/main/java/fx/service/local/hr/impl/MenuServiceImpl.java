@@ -40,4 +40,9 @@ public class MenuServiceImpl implements MenuService {
         return menuMapper.getMenusByHrId(((Hr) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
 
     }
+
+    @Override
+    public List<Menu> getAllMenu() {
+        return menuMapper.getAllMenu();
+    }
 }

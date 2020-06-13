@@ -17,4 +17,6 @@ public interface MenuService {
      * @return
      */
     List<Menu> getMenusByHrId();
+
+    List<Menu> getAllMenu();
 }
