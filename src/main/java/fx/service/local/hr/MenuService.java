@@ -1,6 +1,7 @@
 package fx.service.local.hr;
 
 import fx.model.entity.hr.Menu;
+import fx.model.entity.hr.Role;
 
 import java.util.List;
 
@@ -19,4 +20,9 @@ public interface MenuService {
     List<Menu> getMenusByHrId();
 
     List<Menu> getAllMenu();
+
+    List<Integer> getMidsByRid(Integer rid);
+
+    boolean updateMenuRole(Integer rid, Integer[] mids);
+
 }

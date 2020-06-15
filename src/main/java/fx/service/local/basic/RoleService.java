@@ -9,4 +9,7 @@ public interface RoleService {
 
     List<Role> getAllRole();
 
+    Integer addRole(Role role);
+
+    Integer deleteRolrById(Integer rid);
 }

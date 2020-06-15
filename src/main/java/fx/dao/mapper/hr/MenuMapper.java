@@ -2,6 +2,8 @@ package fx.dao.mapper.hr;
 
 
 import fx.model.entity.hr.Menu;
+import fx.model.entity.hr.Role;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,4 +29,11 @@ public interface MenuMapper {
     List<Menu> getMenusByHrId(Integer Hrid);
 
     List<Menu> getAllMenu();
+
+    List<Integer> getMidsByRid(Integer rid);
+
+    Integer deleteByRid(Integer rid);
+
+    Integer insertRecord(@Param("rid") Integer rid,@Param("mids") Integer[] mids);
+
 }

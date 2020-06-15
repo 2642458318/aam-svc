@@ -111,4 +111,22 @@
         WHERE m1.`id` = m2.`parentId` AND m2.`id` = m3.`parentId` AND m3.`enabled` = TRUE
         ORDER BY m1.`id`, m2.`id`, m3.`id`
     </select>
+
+    <select id="getMidsByRid" resultType="java.lang.Integer">
+        select mid
+        from menu_role
+        where rid = #{rid}
+    </select>
+
+    <delete id="deleteByRid">
+        delete from menu_role
+        where rid = #{rid}
+    </delete>
+
+    <insert id="insertRecord">
+        insert into menu_role (mid,rid)values
+        <foreach collection="mids" separator="," item="mid">
+            (#{mid},#{rid})
+        </foreach>
+    </insert>
 </mapper>

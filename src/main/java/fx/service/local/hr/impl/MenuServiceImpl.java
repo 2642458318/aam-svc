@@ -3,10 +3,12 @@ package fx.service.local.hr.impl;
 import fx.dao.mapper.hr.MenuMapper;
 import fx.model.entity.hr.Hr;
 import fx.model.entity.hr.Menu;
+import fx.model.entity.hr.Role;
 import fx.service.local.hr.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sun.plugin.liveconnect.SecurityContextHelper;
 
 import java.util.List;
@@ -45,4 +47,21 @@ public class MenuServiceImpl implements MenuService {
     public List<Menu> getAllMenu() {
         return menuMapper.getAllMenu();
     }
+
+    @Override
+    public List<Integer> getMidsByRid(Integer rid) {
+        return menuMapper.getMidsByRid(rid);
+    }
+
+    @Transactional
+    @Override
+    public boolean updateMenuRole(Integer rid, Integer[] mids) {
+        menuMapper.deleteByRid(rid);
+        if (mids==null || mids.length==0){
+            return true;
+        }
+        Integer result = menuMapper.insertRecord(rid, mids);
+        return result==mids.length;
+    }
+
 }

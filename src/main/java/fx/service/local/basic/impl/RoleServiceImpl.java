@@ -20,5 +20,18 @@ public class RoleServiceImpl implements RoleService {
         return roleMapper.getAllRoles();
     }
 
+    @Override
+    public Integer addRole(Role role) {
+        if (role.getName().startsWith("ROLE_")){
+            role.setName("ROLE_"+role.getName());
+        }
+        return roleMapper.addRole(role);
+    }
+
+    @Override
+    public Integer deleteRolrById(Integer rid) {
+        return roleMapper.deleteByPrimaryKey(rid);
+    }
+
 
 }
