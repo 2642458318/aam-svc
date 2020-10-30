@@ -17,6 +17,7 @@ import java.util.List;
 /**
  * 提供权限控制，自定义拦截
  * 作用：根据用户传来的请求地址，分析出请求需要的角色
+ * 匹配上了就把角色返回去，没有就返回固定字符串
  */
 @Component
 public class CustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
@@ -38,6 +39,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
         String requestUrl = ((FilterInvocation) obj).getRequestUrl();
         //获取所有菜单数据
         List<Menu> menus = menuService.getAllMenuWitchRole();
+        //循环菜单
         for (Menu menu:menus){
             //根据用户的请求地址分析出用户需要哪些角色才能访问
             if (antPathMatcher.match(menu.getUrl(),requestUrl)){

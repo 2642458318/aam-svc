@@ -1,5 +1,6 @@
 package fx.model.entity.emp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import fx.model.entity.basic.Department;
 import fx.model.entity.basic.JobLevel;
 import fx.model.entity.basic.Position;
@@ -12,6 +13,7 @@ public class Employee {
     private String name;
 
     private String gender;
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date birthday;
 
     private String idCard;
@@ -43,6 +45,7 @@ public class Employee {
     private String specialty;
 
     private String school;
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date beginDate;
 
     private String workState;
@@ -50,12 +53,13 @@ public class Employee {
     private String workID;
 
     private Double contractTerm;
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date conversionTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date notWorkDate;
-
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date beginContract;
-
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date endContract;
 
     private Integer workAge;

@@ -44,5 +44,10 @@
         FROM role r, hr_role hrr
         WHERE hrr.rid = r.id AND hrr.hrid = #{id}
     </select>
+
+
+    <select id="getAllHrsExceptCurrentHr" resultMap="BaseResultMap">
+        select * from hr where id !=#{id};
+    </select>
 </mapper>
     

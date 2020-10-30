@@ -8,7 +8,9 @@ import java.util.List;
 
 @Repository
 public interface EmployeeMapper {
-    List<Employee> getEmployeeByPage(@Param("page") Integer page,@Param("size") Integer size);
+    List<Employee> getEmployeeByPage(@Param("page") Integer page, @Param("size") Integer size,@Param("keyword") String keyword);
 
-    Long getTotal();
+    Long getTotal(String keyword);
+
+    Integer insertSelective(Employee employee);
 }

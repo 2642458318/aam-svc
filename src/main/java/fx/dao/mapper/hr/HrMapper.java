@@ -34,4 +34,6 @@ public interface HrMapper {
      * @return
      */
     List<Role> getHrRolesById(@Param("id") Integer id);
+
+    List<Hr> getAllHrsExceptCurrentHr(Integer id);
 }

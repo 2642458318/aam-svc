@@ -67,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 //所有请求认证之后才可以访问
                 .anyRequest().authenticated()
+                //ObjectPostProcessor 的主要作用就是手动注册实例到 Spring 容器中去（并且让实例走一遍 Bean 的生命周期）
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O object) {
